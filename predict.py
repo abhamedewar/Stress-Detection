@@ -41,8 +41,8 @@ def clicked():
 	label['image'] = label.image_path1
 	label.pack()
 
-	detection_model_path = '/Users/Ramanuj/Downloads/stress_detection-master/trained_models/detection_models/haarcascade_frontalface_default.xml'
-	emotion_model_path = '/Users/Ramanuj/Downloads/stress_detection-master/trained_models/emotion_modelsfer2013_mini_XCEPTION.86-0.43.hdf5'
+	detection_model_path = './trained_models/detection_models/haarcascade_frontalface_default.xml'
+	emotion_model_path = './trained_models/emotion_modelsfer2013_mini_XCEPTION.86-0.43.hdf5'
 	emotion_labels = get_labels('fer2013')
 
 	#loading models
