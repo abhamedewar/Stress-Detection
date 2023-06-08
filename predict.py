@@ -2,9 +2,8 @@ import sys
 import cv2
 from keras.models import load_model
 import numpy as np
-from datasets import get_labels
 from preprocess import preprocess_input
-from keras.preprocessing import image
+import keras.utils as image
 import math
 import tkinter as tk
 from tkinter import ttk
@@ -12,8 +11,6 @@ from tkinter.ttk import Label
 from tkinter import *
 from PIL import Image,ImageTk
 from tkinter import filedialog
-#from tkFileDialog import askopenfilename
-
 
 
 #parameters for loading data and images
@@ -24,17 +21,11 @@ root.geometry("650x650")
 root.configure(background='white')
 back = tk.Frame(master=root,bg='black')
 
-#swin = ScrolledWindow(root, width=500, height=500)
-#swin.pack()
-#win = swin.window
-
 def clicked():
 		
 	label = tk.Label(root)
 	#load the file path
 	image_path = filedialog.askopenfilename()
-	#print(image_path)
-	#open the image
 	image_path1 = Image.open(image_path)
 	image_path1 = image_path1.resize((200, 200), Image.ANTIALIAS)
 	label.image_path1 = ImageTk.PhotoImage(image_path1)
@@ -43,7 +34,7 @@ def clicked():
 
 	detection_model_path = './trained_models/detection_models/haarcascade_frontalface_default.xml'
 	emotion_model_path = './trained_models/emotion_modelsfer2013_mini_XCEPTION.86-0.43.hdf5'
-	emotion_labels = get_labels('fer2013')
+	emotion_labels = {0:'angry',1:'disgust',2:'fear',3:'happy',4:'sad',5:'surprise',6:'neutral'}
 
 	#loading models
 	face_detection = cv2.CascadeClassifier(detection_model_path)
@@ -51,8 +42,6 @@ def clicked():
 
 	# getting input model shapes for inference
 	emotion_target_size = emotion_classifier.input_shape[1:3]
-
-
 
 	# loading images
 	pil_image = image.load_img(image_path, grayscale=True)
@@ -74,19 +63,19 @@ def clicked():
 		gray_face = np.expand_dims(gray_face, 0)
 		gray_face = np.expand_dims(gray_face, -1)
 		emotion_proba = emotion_classifier.predict(gray_face)
-		print("------------------------------------------------------------------------")
-		print("Probabilities of each class: ")
-		print(" 0:angry , 1:disgust , 2:fear , 3:happy , 4:sad , 5:surprise , 6:neutral ")
-		print(emotion_proba)
+		# print("------------------------------------------------------------------------")
+		# print("Probabilities of each class: ")
+		# print(" 0:angry , 1:disgust , 2:fear , 3:happy , 4:sad , 5:surprise , 6:neutral ")
+		# print(emotion_proba)
 		emotion_label_arg = np.argmax(emotion_classifier.predict(gray_face))
 		emotion_text = emotion_labels[emotion_label_arg]
-		print("-------------------------------------------------------------------------")
-		print("Emotion class: ")	
-		print(emotion_text)
-		print("--------------------------------------------------------------------------")
+		# print("-------------------------------------------------------------------------")
+		# print("Emotion class: ")	
+		# print(emotion_text)
+		# print("--------------------------------------------------------------------------")
 		var = np.amax(emotion_proba)
-		print("Maximum probability emotion: ")
-		print(var)
+		# print("Maximum probability emotion: ")
+		# print(var)
 		c = ttk.Label(root, text='MAXIMUM PROBABILITY EMOTION: ',background="white")
 		c.pack()
 		d = ttk.Label(root, text=var,background="white")
