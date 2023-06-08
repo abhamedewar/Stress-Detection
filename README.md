@@ -27,9 +27,9 @@ conda activate stress_detection
 
 3. Install dependencies
 
-pip install keras==2.11.0
-pip install tensorflow==2.11.0
-pip install opencv-python==4.7.0.72
-pip install Pillow==9.5.0
-pip install pandas==1.3.5
+* pip install keras==2.11.0
+* pip install tensorflow==2.11.0
+* pip install opencv-python==4.7.0.72
+* pip install Pillow==9.5.0
+* pip install pandas==1.3.5
 
